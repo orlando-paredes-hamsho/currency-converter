@@ -6,11 +6,18 @@ import './index.css';
 
 const CurrencyField = observer(
   class CurrencyField extends Component {
+    handleChange = (e) => { if (this.props.callback) this.props.callback(e.currentTarget.value); }
     render() {
       return (
         <fieldset>
           <CurrencyDropDown currencies={this.props.currencies} />
-          <input id={this.props.id} type="number" className="currency_field"/>
+          <input
+            id={this.props.id}
+            type="text"
+            className="currency_field"
+            onChange={this.handleChange}
+            value={this.props.value}
+          />
         </fieldset>
       );
     }
@@ -19,7 +26,9 @@ const CurrencyField = observer(
 
 CurrencyField.propTypes = {
   id: PropTypes.string,
-  currencies: PropTypes.arrayOf(PropTypes.object)
+  currencies: PropTypes.arrayOf(PropTypes.object),
+  callback: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default CurrencyField;

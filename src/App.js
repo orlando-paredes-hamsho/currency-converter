@@ -27,8 +27,18 @@ const App = observer(
       return (
         <div className="app">
           <h1>Currency Converter</h1>
-          <CurrencyField id="From" currencies={this.props.model.currency_names} />
-          <CurrencyField id="To" currencies={this.props.model.currency_names} />
+          <CurrencyField
+            id="To"
+            currencies={this.props.model.currency_names}
+            callback={this.props.model.setTo}
+            value={this.props.model.to}
+          />
+          <CurrencyField
+            id="From"
+            currencies={this.props.model.currency_names}
+            callback={this.props.model.setFrom}
+            value={this.props.model.from}
+          />
         </div>
       );
     }
