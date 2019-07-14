@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from "chai";
-import isObject from "./is-object";
+import isObject from "../is-object";
 
 const nonObjectList = [[], "string", 1000, null, undefined, () => {}];
 
