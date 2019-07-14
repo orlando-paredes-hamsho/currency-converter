@@ -7,13 +7,13 @@ describe('CurrencyField', () => {
   describe('Without Props', () => {
     it('Renders', () => {
         const wrapper = shallow(<CurrencyField />);
-        expect(wrapper).to.exist;
+        expect(wrapper.getElements()).not.to.deep.equal([null]);
     });
   });
   describe('With Props', () => {
     it('Renders', () => {
         const wrapper = shallow(<CurrencyField id="test"/>);
-        expect(wrapper).to.exist;
+        expect(wrapper.getElements()).not.to.deep.equal([null]);
     });
     it('Contains an input with the provided id', () => {
         const id = 'test'
