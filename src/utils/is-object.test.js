@@ -2,9 +2,9 @@
 import { expect } from "chai";
 import isObject from "./is-object";
 
-const nonObjectList = [[], "string", 1000, null, undefined];
+const nonObjectList = [[], "string", 1000, null, undefined, () => {}];
 
-describe("isObject util method", () => {
+describe("isObject", () => {
   let dataType;
   nonObjectList.forEach(nonObject => {
     dataType = !nonObject ? `${nonObject}` : nonObject.constructor.name;
