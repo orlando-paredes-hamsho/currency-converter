@@ -1,20 +1,27 @@
-import React from 'react';
+import React, {Component} from 'react';
+import { observer } from "mobx-react";
+import PropTypes from "prop-types";
+import CurrencyDropDown from "../CurrencyDropDown";
 import './index.css';
 
-function CurrencyField(props) {
-  return (
-    <fieldset>
-      <label htmlFor={props.id}>
-        <select>
-          <option>USD</option>
-          <option>MXN</option>
-          <option>EUR</option>
-          <option>CAN</option>
-        </select>
-      </label>
-      <input id={props.id} type="number" className="currency_field"/>
-    </fieldset>
-  );
-}
+const CurrencyField = observer(
+  class CurrencyField extends Component {
+    render() {
+      return (
+        <fieldset>
+          <label htmlFor={this.props.id}>
+            <CurrencyDropDown currencies={this.props.currencies} />
+          </label>
+          <input id={this.props.id} type="number" className="currency_field"/>
+        </fieldset>
+      );
+    }
+  }
+);
+
+CurrencyField.propTypes = {
+  id: PropTypes.string,
+  currencies: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default CurrencyField;

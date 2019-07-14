@@ -29,7 +29,10 @@ describe("App Model", () => {
     });
     it('has the added currency ids as currency_names', () => {
       app.setCurrencies(currencies.results);
-      expect([ ...app.currency_names ]).to.deep.equal(Object.keys(currencies.results));
+      expect([ ...app.currency_names ]).to.deep.equal(Object.keys(currencies.results).map((currency) => ({
+        'label': currencies.results[currency].currencyName,
+        'value': currencies.results[currency].id
+      })));
     });
   });
 });

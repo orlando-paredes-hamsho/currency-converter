@@ -9,7 +9,12 @@ class AppModel {
   };
   get currency_names() {
     const keys = [];
-    for(var k in this.currencies) keys.push(this.currencies[k].id);
+    for(var k in this.currencies){
+      keys.push({
+        'label': this.currencies[k].currencyName,
+        'value': this.currencies[k].id
+      });
+    }
     return keys;
   }
 }
