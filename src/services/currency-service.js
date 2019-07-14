@@ -1,6 +1,6 @@
 import { create } from "apisauce";
 const base = 'https://free.currconv.com/api/v7';
-const key = '4130593d45943f6e8113';
+const key = process.env.REACT_APP_CURRENCY_KEY;
 
 class CurrencyService {
   constructor(baseURL = base) {
