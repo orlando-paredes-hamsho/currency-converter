@@ -11,7 +11,12 @@ const CurrencyDropDown = observer(
     render() {
       if (!this.shouldRender()) return null;
       return (
-          <Select options={this.props.currencies} values={[]} onChange={this.onChange}/>
+          <Select
+            options={this.props.currencies}
+            values={[]}
+            onChange={this.onChange}
+            clearable
+          />
       );
     }
   }

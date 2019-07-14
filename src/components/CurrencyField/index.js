@@ -9,9 +9,7 @@ const CurrencyField = observer(
     render() {
       return (
         <fieldset>
-          <label htmlFor={this.props.id}>
-            <CurrencyDropDown currencies={this.props.currencies} />
-          </label>
+          <CurrencyDropDown currencies={this.props.currencies} />
           <input id={this.props.id} type="number" className="currency_field"/>
         </fieldset>
       );

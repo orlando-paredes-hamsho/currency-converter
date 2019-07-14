@@ -31,10 +31,6 @@ describe('CurrencyField', () => {
         const wrapper = shallow(<CurrencyField id={id} currencies={mock_currencies} />);
         expect(wrapper.find(`input#${id}`)).to.exist;
     });
-    it('Contains a label with the provided id as htmlFor', () => {
-        const wrapper = shallow(<CurrencyField id={id} currencies={mock_currencies} />);
-        expect(wrapper.find(`label[for="${id}"]`)).to.exist;
-    });
     it('Contains a CurrencyDropDown', () => {
         const wrapper = mount(<CurrencyField id={id} currencies={mock_currencies} />);
         expect(wrapper.exists(Select)).to.equal(true);
