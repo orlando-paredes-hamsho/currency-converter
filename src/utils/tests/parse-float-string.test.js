@@ -15,7 +15,6 @@ const test_data = [
 ];
 
 describe("parseFloatString", () => {
-  let dataType;
   test_data.forEach(data => {
     test(`${data.value} returns ${data.expected}`, () => {
       expect(parseFloatString(data.value)).to.equal(data.expected);
