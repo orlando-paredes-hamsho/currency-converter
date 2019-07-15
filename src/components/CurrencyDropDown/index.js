@@ -8,7 +8,7 @@ import './index.css';
 const CurrencyDropDown = observer(
   class CurrencyDropDown extends Component {
     shouldRender = () => Array.isArray(this.props.currencies) && this.props.currencies.length > 0 && isObject(this.props.currency);
-    onChange = (e) => {
+    handleChange = (e) => {
       if (this.props.callback) this.props.callback(e[0]);
     };
     render() {
@@ -17,7 +17,7 @@ const CurrencyDropDown = observer(
           <Select
             options={this.props.currencies}
             values={[this.props.currency]}
-            onChange={this.onChange}
+            onChange={this.handleChange}
             clearable
             placeholder='Choose a type of Currency...'
           />
