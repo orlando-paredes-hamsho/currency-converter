@@ -41,5 +41,28 @@ describe('CurrencyDropDown', () => {
         wrapper.instance().handleChange([]);
         expect(callback.mock.calls.length).to.equal(2);
     });
+    it('Calls update_currencies on mount', () => {
+        const update_currencies = jest.fn();
+        const wrapper = mount(
+          <CurrencyDropDown
+            currencies={mock_currencies}
+            currency={mock_currencies[0]}
+            update_currencies={update_currencies}
+          />
+        );
+        expect(update_currencies.mock.calls.length).to.equal(1);
+    });
+    it('Calls update_currencies on change', () => {
+        const update_currencies = jest.fn();
+        const wrapper = mount(
+          <CurrencyDropDown
+            currencies={mock_currencies}
+            currency={mock_currencies[0]}
+            update_currencies={update_currencies}
+          />
+        );
+        wrapper.instance().handleChange([]);
+        expect(update_currencies.mock.calls.length).to.equal(2);
+    });
   });
 });

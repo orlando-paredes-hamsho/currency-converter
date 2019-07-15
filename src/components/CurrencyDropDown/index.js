@@ -10,6 +10,7 @@ const CurrencyDropDown = observer(
     shouldRender = () => Array.isArray(this.props.currencies) && this.props.currencies.length > 0 && isObject(this.props.currency);
     handleChange = (e) => {
       if (this.props.callback) this.props.callback(e[0]);
+      if (this.props.update_currencies) this.props.update_currencies();
     };
     render() {
       if (!this.shouldRender()) return null;
@@ -29,7 +30,8 @@ const CurrencyDropDown = observer(
 CurrencyDropDown.propTypes = {
   callback: PropTypes.func,
   currencies: PropTypes.arrayOf(PropTypes.object),
-  currency: PropTypes.object
+  currency: PropTypes.object,
+  update_currencies: PropTypes.func
 };
 
 export default CurrencyDropDown;
