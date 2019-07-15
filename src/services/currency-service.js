@@ -13,8 +13,8 @@ class CurrencyService {
   }
   getCurrencies = () =>
     this.api.get(`/currencies?apiKey=${key}`);
-  transformCurrency = (from_currency, to_currency) =>
-    this.api.get(`/convert?q='${from_currency}_${to_currency}'&compact=ultra&apiKey=${key}`);
+  transformCurrency = (query) =>
+    this.api.get(`/convert?q=${query}&compact=ultra&apiKey=${key}`);
 }
 
 export default CurrencyService;
