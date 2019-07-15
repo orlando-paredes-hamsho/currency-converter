@@ -3,10 +3,15 @@ import { expect } from "chai";
 import currencies from "../test-data/currencies";
 import formatted_currencies from "../test-data/formatted_currencies";
 import parseFloatString from "../utils/parse-float-string";
+import convertCurrency from "../utils/convert-currency";
 import AppModel, { initial_currency_value } from "./app";
 
 let app;
-const mock_service = { send: () => {} };
+const currency_rate = 1.00;
+const mock_service = { transformCurrency: jest.fn().mockResolvedValue({
+  status: 200,
+  data: { usd_usd: currency_rate }
+})};
 
 describe("App Model", () => {
   describe("Initial State", () => {
@@ -33,6 +38,9 @@ describe("App Model", () => {
     });
     it('has no service object', () => {
       expect(app.service).not.to.exist;
+    });
+    it('cannot update currencies', () => {
+      expect(app.can_update_currencies).to.be.false;
     });
   });
   describe("Initialized with service", () => {
@@ -123,6 +131,98 @@ describe("App Model", () => {
     it('has the added currencies', () => {
       app.setFromCurrency(formatted_currencies[0]);
       expect({ ...app.from_currency }).to.deep.equal(formatted_currencies[0]);
+    });
+  });
+  describe("can_update_currencies", () => {
+    beforeEach(() => {
+      app = new AppModel();
+    });
+    it('cant update currencies with just to currency', () => {
+      app.setToCurrency(formatted_currencies[0]);
+      expect(app.can_update_currencies).to.be.false;
+    });
+    it('cant update currencies with just from currency', () => {
+      app.setFromCurrency(formatted_currencies[0]);
+      expect(app.can_update_currencies).to.be.false;
+    });
+    it('can update currencies with both currencies', () => {
+      app.setToCurrency(formatted_currencies[0]);
+      app.setFromCurrency(formatted_currencies[0]);
+      expect(app.can_update_currencies).to.be.true;
+    });
+  });
+  describe("updateToCurrency", () => {
+    beforeEach(() => {
+      app = new AppModel(mock_service);
+      mock_service.transformCurrency.mockClear();
+    });
+    it('cant call transformCurrency with just to currency', () => {
+      app.setToCurrency(formatted_currencies[0]);
+      app.updateToCurrency();
+      expect(mock_service.transformCurrency.mock.calls.length).to.equal(0);
+    });
+    it('cant call transformCurrency with just from currency', () => {
+      app.setFromCurrency(formatted_currencies[0]);
+      app.updateToCurrency();
+      expect(mock_service.transformCurrency.mock.calls.length).to.equal(0);
+    });
+    it('can call transformCurrency with both currencies', () => {
+      app.setToCurrency(formatted_currencies[0]);
+      app.setFromCurrency(formatted_currencies[0]);
+      app.updateToCurrency();
+      expect(mock_service.transformCurrency.mock.calls.length).to.equal(1);
+    });
+    it('calls setTo', async () => {
+      app.setToCurrency(formatted_currencies[0]);
+      app.setFromCurrency(formatted_currencies[0]);
+      app.setFrom('1');
+      app.setTo = jest.fn();
+      await app.updateToCurrency();
+      expect(app.setTo.mock.calls.length).to.equal(1);
+    });
+    it('Sets the value of To', async () => {
+      app.setToCurrency(formatted_currencies[0]);
+      app.setFromCurrency(formatted_currencies[0]);
+      app.setFrom('1');
+      await app.updateToCurrency();
+      expect(app.to).to.equal(convertCurrency(currency_rate, app.from));
+    });
+  });
+  describe("updateFromCurrency", () => {
+    beforeEach(() => {
+      app = new AppModel(mock_service);
+      mock_service.transformCurrency.mockClear();
+    });
+    it('cant call transformCurrency with just to currency', () => {
+      app.setToCurrency(formatted_currencies[0]);
+      app.updateFromCurrency();
+      expect(mock_service.transformCurrency.mock.calls.length).to.equal(0);
+    });
+    it('cant call transformCurrency with just from currency', () => {
+      app.setFromCurrency(formatted_currencies[0]);
+      app.updateFromCurrency();
+      expect(mock_service.transformCurrency.mock.calls.length).to.equal(0);
+    });
+    it('can call transformCurrency with both currencies', () => {
+      app.setToCurrency(formatted_currencies[0]);
+      app.setFromCurrency(formatted_currencies[0]);
+      app.updateFromCurrency();
+      expect(mock_service.transformCurrency.mock.calls.length).to.equal(1);
+    });
+    it('calls setFrom', async () => {
+      app.setToCurrency(formatted_currencies[0]);
+      app.setFromCurrency(formatted_currencies[0]);
+      app.setTo('1');
+      app.setFrom = jest.fn();
+      await app.updateFromCurrency();
+      expect(app.setFrom.mock.calls.length).to.equal(1);
+    });
+    it('Sets the value of From', async () => {
+      app.setToCurrency(formatted_currencies[0]);
+      app.setFromCurrency(formatted_currencies[0]);
+      app.setTo('1');
+      await app.updateFromCurrency();
+      expect(app.from).to.equal(convertCurrency(currency_rate, app.to));
     });
   });
 });

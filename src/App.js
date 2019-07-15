@@ -28,17 +28,19 @@ const App = observer(
       return (
         <div className="app">
           <h1>Currency Converter</h1>
+          <p>Please select both currencies you wish to convert between and fill in the field you wish to convert from.</p>
           <fieldset>
             <CurrencyDropDown
               callback={this.props.model.setToCurrency}
               currencies={this.props.model.currency_names}
               currency={this.props.model.to_currency}
+              update_currencies={this.props.model.updateFromCurrency}
             />
             <CurrencyField
               id="To"
               callback={this.props.model.setTo}
               value={this.props.model.to}
-              update_currencies={this.props.service.transformCurrency}
+              update_currencies={this.props.model.updateFromCurrency}
             />
           </fieldset>
           <fieldset>
@@ -46,12 +48,13 @@ const App = observer(
               callback={this.props.model.setFromCurrency}
               currencies={this.props.model.currency_names}
               currency={this.props.model.from_currency}
+              update_currencies={this.props.model.updateToCurrency}
             />
             <CurrencyField
               id="From"
               callback={this.props.model.setFrom}
               value={this.props.model.from}
-              update_currencies={this.props.service.transformCurrency}
+              update_currencies={this.props.model.updateToCurrency}
             />
           </fieldset>
         </div>
