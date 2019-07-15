@@ -1,5 +1,24 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## Prerequisites
+
+### Installation
+
+Clone the code from this repo
+
+```console
+git clone git@github.com:orlando-paredes-hamsho/currency-converter.git
+```
+
+Cd into it and install using `yarn`.
+
+Then just add your ENV variable (next section) and start the application:
+
+```console
+yarn start
+```
+
 ### Env Vars
 
 The project requires you add a ENV variable of REACT_APP_CURRENCY_KEY from the
