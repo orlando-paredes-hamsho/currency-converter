@@ -2,12 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import CurrencyDropDown from './index';
-
-const mock_currencies = [
-  { label: 'usd', value: 'usd' },
-  { label: 'mxn', value: 'mxn' },
-  { label: 'eur', value: 'eur' }
-];
+import mock_currencies from '../../test-data/formatted_currencies';
 
 describe('CurrencyDropDown', () => {
   describe('Without Props', () => {
@@ -18,7 +13,7 @@ describe('CurrencyDropDown', () => {
   });
   describe('With Props', () => {
     it('Renders with Currencies', () => {
-        const wrapper = shallow(<CurrencyDropDown currencies={mock_currencies} />);
+        const wrapper = shallow(<CurrencyDropDown currencies={mock_currencies} currency={mock_currencies[0]} />);
         expect(wrapper.getElements()).not.to.deep.equal([null]);
     });
   });

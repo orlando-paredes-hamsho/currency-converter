@@ -29,14 +29,18 @@ const App = observer(
           <h1>Currency Converter</h1>
           <CurrencyField
             id="To"
-            currencies={this.props.model.currency_names}
             callback={this.props.model.setTo}
+            currencies={this.props.model.currency_names}
+            currency={this.props.model.to_currency}
+            dropdown_callback={this.props.model.setToCurrency}
             value={this.props.model.to}
           />
           <CurrencyField
             id="From"
-            currencies={this.props.model.currency_names}
             callback={this.props.model.setFrom}
+            currencies={this.props.model.currency_names}
+            currency={this.props.model.from_currency}
+            dropdown_callback={this.props.model.setFromCurrency}
             value={this.props.model.from}
           />
         </div>

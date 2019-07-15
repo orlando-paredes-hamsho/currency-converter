@@ -3,12 +3,7 @@ import { expect } from 'chai';
 import { shallow, mount } from 'enzyme';
 import Select from 'react-dropdown-select';
 import CurrencyField from './index';
-
-const mock_currencies = [
-  { label: 'usd', value: 'usd' },
-  { label: 'mxn', value: 'mxn' },
-  { label: 'eur', value: 'eur' }
-];
+import mock_currencies from '../../test-data/formatted_currencies';
 const id = 'test'
 
 describe('CurrencyField', () => {
@@ -32,7 +27,7 @@ describe('CurrencyField', () => {
         expect(wrapper.find(`input#${id}`)).to.exist;
     });
     it('Contains a CurrencyDropDown', () => {
-        const wrapper = mount(<CurrencyField id={id} currencies={mock_currencies} />);
+        const wrapper = mount(<CurrencyField id={id} currencies={mock_currencies} currency={mock_currencies[0]} />);
         expect(wrapper.exists(Select)).to.equal(true);
     });
   });

@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from "chai";
 import currencies from "../test-data/currencies";
+import formatted_currencies from "../test-data/formatted_currencies";
 import parseFloatString from "../utils/parse-float-string";
-import AppModel from "./app";
+import AppModel, { initial_currency_value } from "./app";
 
 let app;
 
@@ -11,9 +12,23 @@ describe("App Model", () => {
     beforeAll(() => {
       app = new AppModel();
     });
-
-    it('', () => {
-      expect(app).to.exist;
+    it('has empty currencies object', () => {
+      expect(app.currencies).to.deep.equal({});
+    });
+    it('has empty currency_names array', () => {
+      expect(app.currency_names).to.deep.equal([]);
+    });
+    it('has empty to string', () => {
+      expect(app.to).to.deep.equal('');
+    });
+    it('has empty from string', () => {
+      expect(app.from).to.deep.equal('');
+    });
+    it('has a to_currency object with base values', () => {
+      expect({ ...app.to_currency }).to.deep.equal(initial_currency_value);
+    });
+    it('has a from_currency object with base values', () => {
+      expect({ ...app.from_currency }).to.deep.equal(initial_currency_value);
     });
   });
   describe("setCurrencies", () => {
@@ -70,6 +85,32 @@ describe("App Model", () => {
       const test_value = '1.3e2.0';
       app.setFrom('1.3e2.0');
       expect(app.from).to.equal(parseFloatString(test_value));
+    });
+  });
+  describe("setToCurrency", () => {
+    beforeAll(() => {
+      app = new AppModel();
+    });
+    it('does not change without a proper currency object', () => {
+      app.setToCurrency(true);
+      expect({ ...app.to_currency }).to.deep.equal(initial_currency_value);
+    });
+    it('has the added currencies', () => {
+      app.setToCurrency(formatted_currencies[0]);
+      expect({ ...app.to_currency }).to.deep.equal(formatted_currencies[0]);
+    });
+  });
+  describe("setFromCurrency", () => {
+    beforeAll(() => {
+      app = new AppModel();
+    });
+    it('does not change without a proper currency object', () => {
+      app.setFromCurrency(true);
+      expect({ ...app.from_currency }).to.deep.equal(initial_currency_value);
+    });
+    it('has the added currencies', () => {
+      app.setFromCurrency(formatted_currencies[0]);
+      expect({ ...app.from_currency }).to.deep.equal(formatted_currencies[0]);
     });
   });
 });
