@@ -6,6 +6,7 @@ import parseFloatString from "../utils/parse-float-string";
 import AppModel, { initial_currency_value } from "./app";
 
 let app;
+const mock_service = { send: () => {} };
 
 describe("App Model", () => {
   describe("Initial State", () => {
@@ -29,6 +30,17 @@ describe("App Model", () => {
     });
     it('has a from_currency object with base values', () => {
       expect({ ...app.from_currency }).to.deep.equal(initial_currency_value);
+    });
+    it('has no service object', () => {
+      expect(app.service).not.to.exist;
+    });
+  });
+  describe("Initialized with service", () => {
+    beforeAll(() => {
+      app = new AppModel(mock_service);
+    });
+    it('has the service object', () => {
+      expect({ ...app.service }).to.deep.equal(mock_service);
     });
   });
   describe("setCurrencies", () => {

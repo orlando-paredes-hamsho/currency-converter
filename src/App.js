@@ -25,7 +25,6 @@ const App = observer(
     }
     render() {
       if (!this.shouldRender()) return null;
-      console.log(this.props.model)
       return (
         <div className="app">
           <h1>Currency Converter</h1>
