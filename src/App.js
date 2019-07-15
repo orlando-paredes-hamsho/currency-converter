@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
 import CurrencyField from './components/CurrencyField';
+import CurrencyDropDown from "./components/CurrencyDropDown";
 import PropTypes from "prop-types";
 import './App.css';
 
@@ -24,25 +25,36 @@ const App = observer(
     }
     render() {
       if (!this.shouldRender()) return null;
+      console.log(this.props.model)
       return (
         <div className="app">
           <h1>Currency Converter</h1>
-          <CurrencyField
-            id="To"
-            callback={this.props.model.setTo}
-            currencies={this.props.model.currency_names}
-            currency={this.props.model.to_currency}
-            dropdown_callback={this.props.model.setToCurrency}
-            value={this.props.model.to}
-          />
-          <CurrencyField
-            id="From"
-            callback={this.props.model.setFrom}
-            currencies={this.props.model.currency_names}
-            currency={this.props.model.from_currency}
-            dropdown_callback={this.props.model.setFromCurrency}
-            value={this.props.model.from}
-          />
+          <fieldset>
+            <CurrencyDropDown
+              callback={this.props.model.setToCurrency}
+              currencies={this.props.model.currency_names}
+              currency={this.props.model.to_currency}
+            />
+            <CurrencyField
+              id="To"
+              callback={this.props.model.setTo}
+              value={this.props.model.to}
+              update_currencies={this.props.service.transformCurrency}
+            />
+          </fieldset>
+          <fieldset>
+            <CurrencyDropDown
+              callback={this.props.model.setFromCurrency}
+              currencies={this.props.model.currency_names}
+              currency={this.props.model.from_currency}
+            />
+            <CurrencyField
+              id="From"
+              callback={this.props.model.setFrom}
+              value={this.props.model.from}
+              update_currencies={this.props.service.transformCurrency}
+            />
+          </fieldset>
         </div>
       );
     }

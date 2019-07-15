@@ -7,7 +7,7 @@ import AppModel from './models/app';
 import * as serviceWorker from './serviceWorker';
 
 const currency_service = new CurrencyService();
-const app_model = new AppModel();
+const app_model = new AppModel(currency_service);
 
 ReactDOM.render(<App model={app_model} service={currency_service} />, document.getElementById('root'));
 

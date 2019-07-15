@@ -5,6 +5,9 @@ import parseFloatString from '../utils/parse-float-string';
 export const initial_currency_value = { value: '1', label: 'Choose a type of Currency...'};
 
 class AppModel {
+  constructor (service) {
+    this.service = service;
+  }
   currencies = {};
   to = ''; // Naming is tough, yo
   from = '';  // Very tough
